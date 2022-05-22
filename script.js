@@ -48,3 +48,48 @@ let presentCondition = {
   UVIndex: "",
   clouds: "",
 };
+
+// Get Lat & Long
+let getCityLatLon = function (citySearch) {
+  citySearch = citySearchEl.value;
+  if (citySearch) {
+    let apiSearch =
+      "https://api.openweathermap.org/geo/1.0/direct?q=" +
+      citySearch +
+      "&limit=1&appid=9087d0900e6a038fb8bf1b65a574774d";
+    fetch(apiSearch).then(function (response) {
+      response.json().then(function (data) {
+        lat = data[0].lat;
+        lon = data[0].lon;
+        getWeatherData(lat, lon);
+      });
+    });
+    cityArray.push(citySearch);
+    console.log(cityArray);
+    window.localStorage.setItem("city", JSON.stringify(cityArray));
+  } else {
+    alert("Enter a City Name");
+  }
+};
+// Call Weather Data
+let getWeatherData = function (lat, lon) {
+  let latLon =
+    "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+    lat +
+    "&lon=" +
+    lon +
+    "&units=imperial&exclude=minutely,hourly,alerts&appid=9087d0900e6a038fb8bf1b65a574774d";
+  console.log(latLon);
+  fetch(latLon).then(function (response) {
+    response.json().then(function (data) {
+      console.log(data);
+      presentCondition.id = data.current.weather[0].id;
+      presentCondition.temp = data.current.temp;
+      presentCondition.wind = data.current.wind_speed;
+      presentCondition.humidity = data.current.humidity;
+      presentCondition.UVIndex = data.current.uvi;
+      presentCondition.clouds = data.current.clouds;
+      displayWeather();
+    });
+  });
+};
