@@ -155,3 +155,36 @@ async function getWeatherText(url) {
   let weatherText = await weatherObject.text();
   parseWeather(weatherText);
 }
+
+
+// Piece Together Forcast
+let parseWeather = function (weatherText) {
+  let weatherJSON = JSON.parse(weatherText);
+  let dailyForecast = weatherJSON.daily;
+  document.getElementById("forecast").innerHTML = "";
+  for (x = 1; x < dailyForecast.length; x++) {
+    let day = dailyForecast[x];
+    let today = new Date().getDay() + x;
+    if (today > 6) {
+      today = today - 7;
+    }
+    let dayOfWeek = getWeekday(today);
+    let icon = day.weather[0].icon;
+    let highTemp = temperatureConversion(day.temp.max);
+    let lowTemp = temperatureConversion(day.temp.min);
+    let humidity = day.humidity;
+    let windSpeed = day.wind_speed;
+    let windGust = day.wind_gust;
+    let UVIndex = day.uvi;
+    displayWeatherDay(
+      dayOfWeek,
+      icon,
+      highTemp,
+      lowTemp,
+      humidity,
+      windSpeed,
+      windGust,
+      UVIndex
+    );
+  }
+};
