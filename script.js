@@ -93,3 +93,27 @@ let getWeatherData = function (lat, lon) {
     });
   });
 };
+
+// Add weather + display weather
+let displayWeather = function () {
+  let presentCityEl = document.querySelector("#currentWeather");
+  let presentCityUvEl = document.createElement("p");
+  let presentCitySearchEl = document.createElement("p");
+  let presentCityTempEl = document.createElement("p");
+  let presentCityWindEl = document.createElement("p");
+  let presentCityHumidityEl = document.createElement("p");
+  presentCityEl.innerHTML = "";
+  presentCitySearchEl.textContent = citySearch;
+  presentCityTempEl.textContent =
+    "Temperature: " + presentCondition.temp + "°F";
+  presentCityWindEl.textContent =
+    "Wind Speeds: " + presentCondition.wind + "MPH";
+  presentCityHumidityEl.textContent =
+    "Humidity: " + presentCondition.humidity + "%";
+  presentCityUvEl.textContent = "UV Index: " + presentCondition.UVIndex;
+  presentCityEl.appendChild(presentCitySearchEl);
+  presentCityEl.appendChild(presentCityTempEl);
+  presentCityEl.appendChild(presentCityWindEl);
+  presentCityEl.appendChild(presentCityHumidityEl);
+  presentCityEl.appendChild(presentCityUvEl);
+};
