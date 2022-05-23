@@ -117,3 +117,41 @@ let displayWeather = function () {
   presentCityEl.appendChild(presentCityHumidityEl);
   presentCityEl.appendChild(presentCityUvEl);
 };
+
+// Forecast API
+// Get Lat & Long
+let gotPosition = function (citySearch) {
+  citySearch = citySearchEl.value;
+  if (citySearch) {
+    let apiSearch =
+      "https://api.openweathermap.org/geo/1.0/direct?q=" +
+      citySearch +
+      "&limit=1&appid=9087d0900e6a038fb8bf1b65a574774d";
+    fetch(apiSearch).then(function (response) {
+      response.json().then(function (data) {
+        lat = data[0].lat;
+        lon = data[0].lon;
+        getForecast(lat, lon);
+      });
+    });
+  } else {
+    alert("Enter a City Name");
+  }
+};
+
+// Call Forecast Data
+let getForecast = function (lat, lon) {
+  let url =
+    "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+    lat +
+    "&lon=" +
+    lon +
+    "&exclude=current,minutely,hourly&appid=9087d0900e6a038fb8bf1b65a574774d";
+  getWeatherText(url);
+};
+
+async function getWeatherText(url) {
+  let weatherObject = await fetch(url);
+  let weatherText = await weatherObject.text();
+  parseWeather(weatherText);
+}
