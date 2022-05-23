@@ -188,3 +188,30 @@ let parseWeather = function (weatherText) {
     );
   }
 };
+
+let displayWeatherDay = function (
+  dayOfWeek,
+  icon,
+  highTemp,
+  lowTemp,
+  humidity,
+  windSpeed,
+  windGust,
+  UVIndex
+) {
+  let out =
+    "<div class='forecastContainer'><img src='http://openweathermap.org/img/wn/" +
+    icon +
+    ".png'/>";
+  out += "<h2>" + dayOfWeek + "</h2>";
+  out += "<p>Temperature: " + highTemp + "°F to " + lowTemp + "°F</p>";
+  out += "<p>Humidity: " + humidity + "%</p>";
+  out +=
+    "<p>Wind Speeds: " +
+    Math.round(windSpeed) +
+    " to " +
+    Math.round(windGust) +
+    " MPH </p> ";
+  out += "<p>UV Index: " + UVIndex + "</p></div>";
+  document.getElementById("forecast").innerHTML += out;
+};
