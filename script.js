@@ -215,3 +215,46 @@ let displayWeatherDay = function (
   out += "<p>UV Index: " + UVIndex + "</p></div>";
   document.getElementById("forecast").innerHTML += out;
 };
+
+// Days of the Week
+let getWeekday = function (dayNumber) {
+  var weekday = new Array(7);
+  weekday[0] = "Sunday";
+  weekday[1] = "Monday";
+  weekday[2] = "Tuesday";
+  weekday[3] = "Wednesday";
+  weekday[4] = "Thursday";
+  weekday[5] = "Friday";
+  weekday[6] = "Saturday";
+
+  return weekday[dayNumber];
+};
+
+// Temperature & Time
+let temperatureConversion = function (kelvinTemperature) {
+  const celsius = kelvinTemperature - 273;
+  const fahrenheit = Math.floor(celsius * (9 / 5) + 32);
+  return fahrenheit;
+};
+
+let timestampToTime = function (timeStamp) {
+  let date = new Date(timeStamp * 1000);
+  let hours = date.getHours();
+  let minutes = "";
+  if (date.getMinutes() < 10) {
+    minutes = "0" + date.getMinutes();
+  } else {
+    minutes = date.getMinutes();
+  }
+  return hours + ":" + minutes;
+};
+
+// Working Button
+checkWeatherBtn.addEventListener("click", () => {
+  getCityLatLon();
+  gotPosition();
+  historySave();
+});
+// checkForecastBtn.addEventListener("click", gotPosition);
+// historyBtn.addEventListener("click", historySave);
+// clearLocalBtn.addEventListener("click", deleteData);
